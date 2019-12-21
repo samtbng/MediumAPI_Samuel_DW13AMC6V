@@ -5,8 +5,17 @@ module.exports = (sequelize, DataTypes) => {
     user_id: DataTypes.INTEGER,
     comment: DataTypes.STRING
   }, {});
-  comment.associate = function(models) {
+  comment.associate = function (models) {
     // associations can be defined here
+    comment.belongsTo(models.articles, {
+      foreignKey: 'article_id',
+      as: 'articles',
+    }),
+
+      comment.belongsTo(models.users, {
+        foreignKey: 'user_id',
+        as: 'users',
+      })
   };
   return comment;
 };

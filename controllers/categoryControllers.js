@@ -5,40 +5,23 @@ const users = models.users
 
 exports.index = (req, res) => {
     cat.findAll({ attributes: ['id', 'name_category'] })
-        .then(data => res.send(data))
-        .catch(err => res.send(err))
+        .then(data => {
+            res.send(data)
+        }).catch(err => res.send(err))
 }
 
 exports.perCategory = (req, res) => {
     cat.findOne({
         where: { id: req.params.id },
-        include: [{
-            model: articles,
-            as: 'articles',
-            include: [{
-                model: users,
-                as: 'users'
-            }],
-            limit: 5,
-        }]
-    })
-        .then(data => res.send(data))
-        .catch(err => res.send(err))
+        include: [{ model: articles, as: 'articles', include: [{ model: users, as: 'users' }], limit: 5 }]
+    }).then(data => res.send(data)).catch(err => res.send(err))
 }
 
 
 exports.create = (req, res) => {
-    const input = req.body
-    console.log(input)
-    cat.create({
-        name_category: input.name
-    }).then(data => {
-        res.send(data)
-    })
-        .catch(err => {
-            res.send(err)
-        })
+    cat.create({ name_category: req.body.name }).then(data => { res.send(data) }).catch(err => { res.send(err) })
 }
+
 
 // const key = Object.keys(data).filter(item => {
 //     if(item !== 'createdAt' || item !== 'updatedAt'){

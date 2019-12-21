@@ -9,6 +9,8 @@ const categoryControllers = require('./controllers/categoryControllers')
 const articlesControllers = require('./controllers/articlesControllers')
 const { authenticated } = require('./middleware')
 const AuthController = require('./controllers/authController')
+const commentControllers = require('./controllers/commentController')
+const usersController = require('./controllers/usersController')
 //use express in app variable
 const app = express()
 //define the server port
@@ -24,23 +26,36 @@ app.use(function (req, res, next) {
 
 app.group("/api/v1", (router) => {
     //task 1
-    router.get('/categories', categoryControllers.index)
-    router.post('/category', categoryControllers.create)
+    router.get('/categories', categoryControllers.index) //show all categories
+    router.post('/category', categoryControllers.create) //create new category to database
 
     //task 2
-    router.get('/articles', articlesControllers.index)
-    router.get('/article/lastest', articlesControllers.lastest)
+    router.get('/articles', articlesControllers.index) // show all articles
+    router.get('/article/latest', articlesControllers.latest) //show articles from the latest
 
-    //task3 3
-    router.get('/category/:id/article', categoryControllers.perCategory)
+    //task3 
+    router.get('/category/:id/article', categoryControllers.perCategory) // show article with same category
 
     //task 4
-    router.post('/article', authenticated, articlesControllers.create)
-    router.patch('/article', authenticated, articlesControllers.update)
-    router.delete('/article', authenticated, articlesControllers.update)
+    router.post('/article', authenticated, articlesControllers.create) //create new article and using authorized
+    router.patch('/article/:id', authenticated, articlesControllers.update) //edit article and using authorized
+    router.delete('/article/:id', authenticated, articlesControllers.delete) //delete article and using authorized
 
     //login
-    router.post('/login', AuthController.login)
+    router.post('/login', AuthController.login) //create new token by entering email and password
+
+    //task 5
+    router.get('/article/:id', articlesControllers.show) //show detail article
+
+    router.get('/comments', commentControllers.index) // show all comment in all articles
+    router.post('/article/:id/comment', authenticated, commentControllers.create) //show comment in one article
+    router.put('/article/:id/comment', authenticated, commentControllers.update) //edit comment in one article
+    router.delete('/article/:id/comment', authenticated, commentControllers.delete) //delete comment in one article
+
+    router.get('/users', usersController.index) //show all users
+    router.get('/user/:id', usersController.showOne) //show login user
+
+    router.post('/registrasi', usersController.registrasi) //create new user
 
 
 })
