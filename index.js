@@ -11,6 +11,7 @@ const { authenticated } = require('./middleware')
 const AuthController = require('./controllers/authController')
 const commentControllers = require('./controllers/commentController')
 const usersController = require('./controllers/usersController')
+const followController = require('./controllers/followControllers')
 //use express in app variable
 const app = express()
 //define the server port
@@ -41,22 +42,26 @@ app.group("/api/v1", (router) => {
     router.patch('/article/:id', authenticated, articlesControllers.update) //edit article and using authorized
     router.delete('/article/:id', authenticated, articlesControllers.delete) //delete article and using authorized
 
-    //login
+    //task 10
     router.post('/login', AuthController.login) //create new token by entering email and password
 
     //task 5
     router.get('/article/:id', articlesControllers.show) //show detail article
 
+    //task 6
     router.get('/comments', commentControllers.index) // show all comment in all articles
     router.post('/article/:id/comment', authenticated, commentControllers.create) //show comment in one article
     router.put('/article/:id/comment', authenticated, commentControllers.update) //edit comment in one article
     router.delete('/article/:id/comment', authenticated, commentControllers.delete) //delete comment in one article
 
+    //task 11
     router.get('/users', usersController.index) //show all users
     router.get('/user/:id', usersController.showOne) //show login user
-
     router.post('/registrasi', usersController.registrasi) //create new user
 
+    //task 7
+    router.post('/follow', authenticated, followController.create)//follow another account
+    router.delete('/follow', authenticated, followController.delete)//unfollow another account
 
 })
 
