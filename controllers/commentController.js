@@ -1,6 +1,6 @@
 const models = require('../models')
 const comment = models.comment
-const users = models.users
+const articles = models.articles
 
 exports.index = (req, res) => {
     comment.findAll().then(data => res.send(data)).catch(err => res.send(err))
@@ -24,8 +24,8 @@ exports.update = (req, res) => {
                 user_id: userId,
                 article_id: articleId
             }
-        })
-        .then(data => res.send(data)).catch(err => { res.send(err) })
+        },
+    ).then(data => res.send(data)).catch(err => { res.send(err) })
 }
 
 exports.delete = (req, res) => {
