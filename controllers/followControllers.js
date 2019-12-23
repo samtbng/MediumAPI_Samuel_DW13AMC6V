@@ -6,10 +6,7 @@ exports.index = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    follow.create({
-        user_id: req.body.user_id,
-        following_user_id: req.body.following_user_id,
-    }).then(data => res.send(data)).catch(err => { res.send(err) })
+    follow.create(req.body).then(data => res.send(data)).catch(err => { res.send(err) })
 }
 
 exports.delete = (req, res) => {

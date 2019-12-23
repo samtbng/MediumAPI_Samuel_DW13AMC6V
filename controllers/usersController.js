@@ -11,13 +11,7 @@ exports.index = (req, res) => {
 }
 
 exports.registrasi = (req, res) => {
-    users.create({
-        username: req.body.username,
-        password: req.body.password,
-        fullname: req.body.fullname,
-        email: req.body.email,
-        avatar: req.body.fullname
-    }).then(user => {
+    users.create(req.body).then(user => {
         const email = user.email
         const token = jwt.sign({ userId: user.id }, 'dumbways')
         res.send({ email, token })

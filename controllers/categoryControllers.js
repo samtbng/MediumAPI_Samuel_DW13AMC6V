@@ -19,7 +19,7 @@ exports.perCategory = (req, res) => {
 
 
 exports.create = (req, res) => {
-    cat.create({ name_category: req.body.name }).then(data => { res.send(data) }).catch(err => { res.send(err) })
+    cat.create(req.body).then(data => { res.send(data) }).catch(err => { res.send(err) })
 }
 
 

@@ -25,14 +25,7 @@ exports.index = (req, res) => {
 }
 
 exports.create = (req, res) => {
-    Article.create({
-        id: req.param.id,
-        title: req.body.title,
-        category_id: req.body.category_id,
-        content: req.body.content,
-        img: req.body.img,
-        author_id: req.body.author_id
-    }).then(article => res.send(article)).catch(err => { res.send(err) })
+    Article.create(req.body).then(article => res.send(article)).catch(err => { res.send(err) })
 }
 
 exports.latest = (req, res) => {
@@ -76,13 +69,7 @@ exports.perCategory = (req, res) => {
 }
 
 exports.update = (req, res) => {
-    Article.update({
-        title: req.body.title,
-        category_id: req.body.category_id,
-        content: req.body.content,
-        img: req.body.img,
-        author_id: req.body.author_id
-    }, { where: { id: req.params.id } }).then(data => res.send(data)).catch(err => { res.send(err) })
+    Article.update(req.body, { where: { id: req.params.id } }).then(data => res.send(data)).catch(err => { res.send(err) })
 }
 
 exports.delete = (req, res) => {
