@@ -69,7 +69,10 @@ exports.perCategory = (req, res) => {
                 attributes: ['id', 'username', 'fullname']
             }
         ]
-    }).then(data => res.send(data)).catch(err => res.send(err))
+    }).then(data => {
+        const randomData = shuffleArray(data)
+        res.send(randomData)
+    }).catch(err => res.send(err))
 }
 
 exports.update = (req, res) => {
