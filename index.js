@@ -63,6 +63,9 @@ app.group("/api/v1", (router) => {
     router.post('/follow', authenticated, followController.create)//follow another account
     router.delete('/follow', authenticated, followController.delete)//unfollow another account
 
+    //task 9
+    router.get('/users/:id/articles', authenticated, usersController.usersArticle)// show article by users id
+
 })
 
 //create the homepage route
