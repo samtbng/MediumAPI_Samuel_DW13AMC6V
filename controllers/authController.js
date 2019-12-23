@@ -7,8 +7,9 @@ exports.login = (req, res) => {
     User.findOne({ where: { email, password } }).then(user => {
         if (user) {
             const id = user.id
-            const token = jwt.sign({ userId: id }, 'dumbways')
-            res.send({ id, email, token })
+            const username = user.username
+            const token = jwt.sign({ usernameJwt: username }, 'dumbways')
+            res.send({ id, username, email, token })
         } else {
             res.send({ error: true, message: "Wrong email or password!" })
         }

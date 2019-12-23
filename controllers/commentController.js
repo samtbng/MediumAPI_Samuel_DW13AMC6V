@@ -1,9 +1,12 @@
 const models = require('../models')
 const comment = models.comment
 const articles = models.articles
+const jwt = require('jsonwebtoken')
 
 exports.index = (req, res) => {
-    comment.findAll().then(data => res.send(data)).catch(err => res.send(err))
+    comment.findAll().then(data => {
+        res.send({ data })
+    }).catch(err => res.send(err))
 }
 
 exports.create = (req, res) => {
